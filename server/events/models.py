@@ -9,7 +9,7 @@ from django.core.validators import MaxValueValidator
 
 
 class Event(models.Model):
-    cordinator = models.ForeignKey("users.User", on_delete=models.CASCADE)
+    coordinator = models.ForeignKey("users.User", on_delete=models.CASCADE)
     title = models.CharField(_("title"), max_length=150)
     description = models.CharField(_("description"), max_length=750)
     image = models.CharField(default="banner.jpg", max_length=256)
@@ -21,15 +21,16 @@ class Event(models.Model):
     street = models.CharField(_("street"), max_length=100)
     postal = models.CharField(_("postal"), max_length=5)
     slug = models.SlugField(_("slug"), max_length=150)
-    # Moderators
-    # Followers
-    # Participants
+
+
+    def __str__(self):
+        return self.title
 
 
 # Signals
-# @receiver(pre_save, sender=Event)
-# def event_pre_save_handler(sender, instance, *args, **kwargs):
-#     if not instance.slug:
-#         instance.slug = slugify(instance.title)
+@receiver(pre_save, sender=Event)
+def event_pre_save_handler(sender, instance, *args, **kwargs):
+    if not instance.slug:
+        instance.slug = slugify(instance.title)
 
 
