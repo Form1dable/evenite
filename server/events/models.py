@@ -27,6 +27,11 @@ class Event(models.Model):
         return self.title
 
 
+# Survey
+
+
+# Polls
+
 # Signals
 @receiver(pre_save, sender=Event)
 def event_pre_save_handler(sender, instance, *args, **kwargs):
