@@ -3,26 +3,27 @@ import {RootState, AppDispatch} from "../app/store"
 
 // Redux
 import {useDispatch, useSelector} from "react-redux";
-import {getEvents, reset} from "../features/events/eventSlice";
+import {
+    getExploreEventsList,
+    getUpcommingEvenstList
+} from "../features/events/eventsSlice";
 
 import EventSectionHeader from "../components/events/EventSectionHeader";
-import SpotlightEventCard from "../components/events/SpotlightEventCard";
+import EventCard from "../components/events/EventCard";
 import AnimatedPage from "../components/animation/AnimatedPage";
 
 
 const Events: React.FC = () => {
 
     const dispatch = useDispatch<AppDispatch>()
-    const data = useSelector<RootState, EventInterface[]>(state => state.events.data)
+    const upcommingEventsList = useSelector<RootState, EventInterface[]>(state => state.events.data.upcommingEventsList)
+    const exploreEventsList = useSelector<RootState, EventInterface[]>(state => state.events.data.exploreEventsList)
 
 
     useEffect(() => {
-        dispatch(getEvents())
+        dispatch(getUpcommingEvenstList(3))
+        dispatch(getExploreEventsList(3))
     }, []);
-
-    useEffect(() => {
-        console.log(data)
-    });
 
 
     return (
@@ -32,23 +33,25 @@ const Events: React.FC = () => {
                     {/* Discover */}
                     <EventSectionHeader title={"Upcomming Events"} subtitle={"Discover"}/>
 
-                    <article className={"flex space-x-6 mt-6"}>
-                        {/*  Event Cards  */}
-                        {data.map(event => (
-                            <SpotlightEventCard key={event.id} event={event}/>
-                        ))}
+                    <article>
+                        <article className={"flex space-x-6 mt-6"}>
+                            {/*  Event Cards  */}
+                            {upcommingEventsList.map(event => (
+                                <EventCard key={event.id} event={event}/>
+                            ))}
+                        </article>
                     </article>
                 </section>
 
                 <section className={"mt-16"}>
                     {/* Explore */}
-                    <EventSectionHeader title={"All nearby events"} subtitle={"Explore"}/>
+                    <EventSectionHeader title={"Events"} subtitle={"Explore"}/>
 
                     <article>
                         <article className={"flex space-x-6 mt-6"}>
                             {/*  Event Cards  */}
-                            {data.map(event => (
-                                <SpotlightEventCard key={event.id} event={event}/>
+                            {exploreEventsList.map(event => (
+                                <EventCard key={event.id} event={event}/>
                             ))}
                         </article>
                     </article>

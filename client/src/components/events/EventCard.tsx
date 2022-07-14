@@ -1,32 +1,23 @@
 import React from 'react';
+import {useNavigate} from "react-router-dom"
+
+import {motion} from "framer-motion";
+
 import {AiOutlineCaretRight} from "react-icons/ai";
 
-interface EventProp {
-    id: number;
-    coordinator: string;
-    title: string;
-    description: string;
-    image: string;
-    price: number;
-    start_date: string;
-    end_date: string;
-    state: string;
-    city: string;
-    street: string;
-    postal: string;
-    slug: string;
-}
 
 interface Props {
-    event: EventProp
+    event: EventInterface
 }
 
 
-const SpotlightEventCard: React.FC<Props> = (props) => {
+const EventCard: React.FC<Props> = (props) => {
+
+    const navigate = useNavigate()
 
     const {
         id,
-        coordinator,
+        user_id,
         title,
         description,
         image,
@@ -41,17 +32,23 @@ const SpotlightEventCard: React.FC<Props> = (props) => {
     } = props.event;
 
     return (
-        <div
-            className={"w-full max-w-lg bg-slate-700 rounded shadow-md hover:scale-105 hover:ease transition-all duration-300 cursor-pointer"}>
+        <motion.div
+            onClick={() => navigate(`${id}`)}
+            whileHover={{
+                scale: 1.02,
+                transition: {duration: 0.3}
+            }}
+            className={"w-full max-w-lg bg-gray-800 rounded shadow-md"}
+            style={{minWidth: "350px"}}>
             {/* Image */}
-            <div className={"w-full bg-slate-600 h-48"}>
+            <div className={"w-full bg-slate-600 h-48 cursor-pointer"}>
             </div>
 
             {/* Card content */}
             <div className={"py-4 px-6"}>
                 {/* Time and Coordinator */}
                 <div className={"flex justify-between items-center"} style={{fontSize: "0.85rem"}}>
-                    <p className={"font-bold"}>{coordinator}</p>
+                    <p className={"font-bold"}>{user_id}</p>
                     <p className={"font-bold"}>{start_date}</p>
                 </div>
 
@@ -70,15 +67,21 @@ const SpotlightEventCard: React.FC<Props> = (props) => {
                         </div>
                     </div>
 
-                    <div
-                        className={"items-center font-semibold flex bg-slate-800 py-2 px-3 rounded scale-90 hover:scale-100 transition-all cursor-pointer"}>
-                        <span className={"mr-2 text-slate-300"}>View Event</span> <span
-                        className={"text-slate-400"}><AiOutlineCaretRight/></span>
+                    {/*<div onClick={() => navigate(`${id}`)}*/}
+                    {/*     className={"items-center text-gray-300 font-semibold flex bg-slate-800 py-2 px-3 rounded scale-90 hover:scale-100 transition-all cursor-pointer hover:bg-sky-500 hover:text-white"}>*/}
+                    {/*        <span className={"mr-2"}>*/}
+                    {/*            Attend</span> <span*/}
+                    {/*    className={""}><AiOutlineCaretRight/></span>*/}
+                    {/*</div>*/}
+                    <div className={""}>
+                        <span className={"text-lg font-bold text-sky-300 mr-2"}>80</span>
+                        <span className={"text-sm font-semibold text-gray-500"}>Participants</span>
                     </div>
+
                 </div>
             </div>
-        </div>
+        </motion.div>
     );
 };
 
-export default SpotlightEventCard;
+export default EventCard;

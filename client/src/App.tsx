@@ -32,8 +32,8 @@ function App() {
                             <Route path="/login" element={<Login/>}/>
                             <Route path="/register" element={<Register/>}/>
                             <Route path="/profile" element={<Profile/>}/>
-                            <Route path="/event" element={<Event/>}/>
                             <Route path="/events" element={<Events/>}/>
+                            <Route path="/events/:eventId" element={<Event/>}/>
                         </Routes>
                     </AnimatePresence>
                 </div>

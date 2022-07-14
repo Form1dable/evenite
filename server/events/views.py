@@ -1,3 +1,7 @@
+import datetime
+
+from django.utils import timezone
+
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
@@ -21,10 +25,18 @@ def get_event(request, id):
 @api_view(["GET"])
 def get_all_events(request):
     events = Event.objects.all()
+    limit = request.GET.get("limit", None)
 
-    serializer = EventSerializer(events, many=True)
+    if events is not None:
+        if limit is not None:
+            events = Event.objects.all()[:int(limit)]
+            serializer = EventSerializer(events, many=True)
+            return Response(serializer.data)
 
-    return Response(serializer.data)
+        serializer = EventSerializer(events, many=True)
+        return Response(serializer.data)
+
+    return Response(status=status.HTTP_404_NOT_FOUND)
 
 
 
@@ -53,3 +65,24 @@ def update_event(request, id):
             return Response(status=status.HTTP_200_OK)
 
     return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
+
+
+
+# Categorized events
+
+@api_view(["GET"])
+def upcomming_events(request):
+    limit = request.GET.get("limit", None)
+    if limit is not None:
+        events = Event.objects.filter(start_date__gte=timezone.now()).order_by("start_date")[:int(limit)]
+        if events is not None:
+            serializer = EventSerializer(events, many=True)
+            return Response(serializer.data)
+
+    events = Event.objects.filter(start_date__gte=timezone.now()).order_by("start_date")
+
+    if events is not None:
+        serializer = EventSerializer(events, many=True)
+        return Response(serializer.data)
+
+    return Response(status=status.HTTP_404_NOT_FOUND)

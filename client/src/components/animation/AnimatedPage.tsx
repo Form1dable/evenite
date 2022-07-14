@@ -13,7 +13,7 @@ const animations = {
 const AnimatedPage: React.FC<Props> = ({children}) => {
     return (
         <motion.div variants={animations} initial="initial" animate="animate" exit="exit"
-                    transition={{duration: 0.5}}
+                    transition={{duration: 0.3}}
         >
             {children}
         </motion.div>
