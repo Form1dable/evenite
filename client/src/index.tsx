@@ -6,7 +6,8 @@ import App from './App';
 
 import {BrowserRouter as Router} from "react-router-dom"
 
-import "./index.css"
+import "./index.css";
+import "./asset/css/style.css";
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
