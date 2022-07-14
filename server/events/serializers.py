@@ -1,12 +1,13 @@
 from rest_framework import serializers
 from events.models import Event
+from users.models import User
 from django.utils.text import slugify
 
 
 class EventSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event
-        fields = ["id", "coordinator", "title", "description", "price", "start_date", "end_date", "state", "city", "street", "postal"]
+        fields = ["id", "user_id", "title", "description", "price", "start_date", "end_date", "state", "city", "street", "postal"]
 
         def create(self, validated_data):
             return Event(**validated_data)

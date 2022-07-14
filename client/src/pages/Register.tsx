@@ -32,9 +32,10 @@ const Register: React.FC = () => {
                             type="email"
                             name="email"
                             placeholder="Email address"
-                            className={"py-4 px-4 w-96 rounded bg-slate-700 text-slate-100"}
+                            className={"py-4 px-4 w-96 rounded bg-slate-800 text-slate-100"}
                             onChange={handleInput}
                             value={formData.email}
+                            required
                             autoComplete="off"
                         />
                     </div>
@@ -43,9 +44,10 @@ const Register: React.FC = () => {
                             type="username"
                             name="username"
                             placeholder="Username"
-                            className={"py-4 px-4 w-96 rounded bg-slate-700 text-slate-100"}
+                            className={"py-4 px-4 w-96 rounded bg-slate-800 text-slate-100"}
                             onChange={handleInput}
                             value={formData.username}
+                            required
                             autoComplete="off"
                         />
                     </div>
@@ -54,10 +56,11 @@ const Register: React.FC = () => {
                             type="password"
                             name="password1"
                             placeholder="Password"
-                            className={"py-4 px-4 w-96 rounded bg-slate-700 text-slate-100"}
+                            className={"py-4 px-4 w-96 rounded bg-slate-800 text-slate-100"}
                             onChange={handleInput}
                             value={formData.password1}
-                            autoComplete="off"
+                            required
+                            autoComplete="new-password"
                         />
                     </div>
                     <div className={"my-5"}>
@@ -65,15 +68,16 @@ const Register: React.FC = () => {
                             type="password"
                             name="password2"
                             placeholder="Confirm password"
-                            className={"py-4 px-4 w-96 rounded bg-slate-700 text-slate-100"}
+                            className={"py-4 px-4 w-96 rounded bg-slate-800 text-slate-100"}
                             onChange={handleInput}
                             value={formData.password2}
-                            autoComplete="off"
+                            required
+                            autoComplete="new-password"
                         />
                     </div>
+                    <input type={"submit"} value={"Register"}
+                           className={"bg-sky-500 py-3 px-8 rounded font-semibold w-full cursor-pointer"}/>
                     <div className={"my-5 flex justify-between items-center"}>
-                        <input type={"submit"} value={"Register"}
-                               className={"bg-sky-500 py-3 px-8 rounded font-semibold"}/>
                         <p style={{fontSize: "0.8rem"}} className={"text-slate-400"}>Already have an account? <span
                             className={"text-sky-300 font-semibold"}><Link to={"/login"}>Login</Link></span></p>
                     </div>

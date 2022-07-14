@@ -31,7 +31,7 @@ const Login: React.FC = () => {
                             type="email"
                             name="email"
                             placeholder="Email address"
-                            className={"py-4 px-4 w-96 rounded bg-slate-700 text-slate-100"}
+                            className={"py-4 px-4 w-96 rounded bg-slate-800 text-slate-100"}
                             onChange={handleInput}
                             value={formData.email}
                             required
@@ -43,7 +43,7 @@ const Login: React.FC = () => {
                             type="password"
                             name="password"
                             placeholder="Email address"
-                            className={"py-4 px-4 w-96 rounded bg-slate-700 text-slate-100"}
+                            className={"py-4 px-4 w-96 rounded bg-slate-800 text-slate-100"}
                             onChange={handleInput}
                             value={formData.password}
                             required
@@ -51,11 +51,14 @@ const Login: React.FC = () => {
                         />
                     </div>
 
+                    <input type={"submit"} value={"Login"}
+                           className={"bg-sky-500 py-3 px-8 rounded font-semibold w-full cursor-pointer"}/>
                     <div className={"my-5 flex justify-between items-center"}>
-                        <input type={"submit"} value={"Login"}
-                               className={"bg-sky-500 py-3 px-8 rounded font-semibold"}/>
                         <p style={{fontSize: "0.8rem"}} className={"text-slate-400"}>Don't have an account? <span
                             className={"text-sky-300 font-semibold"}><Link to={"/register"}>Register</Link></span></p>
+                        <p style={{fontSize: "0.8rem"}} className={"text-slate-400 text-sky-300 font-semibold"}>Frogot
+                            Password</p>
+
                     </div>
                 </form>
             </section>

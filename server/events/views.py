@@ -33,7 +33,6 @@ def delete_event(request, id):
     return Response({})
 
 @api_view(["POST"])
-@permission_classes([IsAuthenticated])
 def create_event(request):
     serializer = EventSerializer(data=request.data)
     if serializer.is_valid():

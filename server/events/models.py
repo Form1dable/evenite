@@ -6,10 +6,12 @@ from django.utils.translation import gettext_lazy as _
 from django.utils.text import slugify
 from django.core.validators import MaxValueValidator
 
+from users.models import User
+
 
 
 class Event(models.Model):
-    coordinator = models.ForeignKey("users.User", on_delete=models.CASCADE)
+    user_id = models.ForeignKey("users.User", on_delete=models.CASCADE)
     title = models.CharField(_("title"), max_length=150)
     description = models.CharField(_("description"), max_length=750)
     image = models.CharField(default="banner.jpg", max_length=256)

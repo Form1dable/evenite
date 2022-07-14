@@ -15,22 +15,24 @@ import Navbar from "./components/navigation/Navbar"
 
 
 function App() {
-  return (
-      <div className="bg-gray-800 h-screen text-gray-100">
-          <Navbar />
-      <main className="container mx-auto mt-24">
-            <Routes>
-                <Route path="/" element={<Home/>} />
-                <Route path="/about" element={<About/>} />
-                <Route path="/login" element={<Login/>} />
-                <Route path="/register" element={<Register/>} />
-                <Route path="/profile" element={<Profile/>} />
-                <Route path="/event" element={<Event/>} />
-                <Route path="/events" element={<Events/>} />
-            </Routes>
-      </main>
-      </div>
-  );
+    return (
+        <div className="bg-gray-900 h-screen text-gray-100">
+            <div className={"w-10/12 max-w-7xl mx-auto"}>
+                <Navbar/>
+                <main className="mt-24">
+                    <Routes>
+                        <Route path="/" element={<Home/>}/>
+                        <Route path="/about" element={<About/>}/>
+                        <Route path="/login" element={<Login/>}/>
+                        <Route path="/register" element={<Register/>}/>
+                        <Route path="/profile" element={<Profile/>}/>
+                        <Route path="/event" element={<Event/>}/>
+                        <Route path="/events" element={<Events/>}/>
+                    </Routes>
+                </main>
+            </div>
+        </div>
+    );
 }
 
 export default App;
