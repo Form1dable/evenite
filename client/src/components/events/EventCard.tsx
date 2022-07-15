@@ -5,6 +5,10 @@ import {motion} from "framer-motion";
 
 import {AiOutlineCaretRight} from "react-icons/ai";
 
+// Ui
+import ProfileBadge from "../ui/ProfileBadge";
+import CardMetrics from "../ui/CardMetrics";
+
 
 interface Props {
     event: EventInterface
@@ -38,7 +42,7 @@ const EventCard: React.FC<Props> = (props) => {
                 scale: 1.02,
                 transition: {duration: 0.3}
             }}
-            className={"w-full max-w-lg bg-gray-800 rounded shadow-md"}
+            className={"w-full max-w-lg bg-gray-800 rounded shadow-md cursor-pointer"}
             style={{minWidth: "350px"}}>
             {/* Image */}
             <div className={"w-full bg-slate-600 h-48 cursor-pointer"}>
@@ -47,18 +51,23 @@ const EventCard: React.FC<Props> = (props) => {
             {/* Card content */}
             <div className={"py-4 px-6"}>
                 {/* Time and Coordinator */}
-                <div className={"flex justify-between items-center"} style={{fontSize: "0.85rem"}}>
-                    <p className={"font-bold"}>{user_id}</p>
-                    <p className={"font-bold"}>{start_date}</p>
+                <div className={"flex justify-between items-center text-gray-400"}>
+                    <p className={"font-bold"}>Soest</p>
+                    <p className={"font-bold text-sm"}>July 22, 2022</p>
                 </div>
 
                 {/* Content */}
-                <p className={"mt-1 text-xl font-semibold tracking-wide"}>{title}</p>
-                <p style={{fontSize: "0.85rem"}} className={"font-semibold mt-1"}>{description}</p>
+                <p className={"mt-4 text-2xl font-bold tracking-wide text-slate-200"}>BBQ Party - {title}</p>
+                <p className={"text-sm mt-1 text-gray-400 text-justify"}>
+                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+                    industry's standard dummy text ever since the 1500s
+                </p>
+
 
                 {/* Location */}
-                <div className={"mt-6 flex justify-between items-end"}>
-                    <div style={{fontSize: "0.85rem"}} className={"font-semibold text-slate-300"}>
+                <div className={"mt-8 flex justify-between items-end"}>
+                    <ProfileBadge/>
+                    <div className={"font-bold text-gray-400 text-sm"}>
                         <div>
                             <span>{city}, {postal}</span>
                         </div>
@@ -66,19 +75,10 @@ const EventCard: React.FC<Props> = (props) => {
                             <span>{street}</span>
                         </div>
                     </div>
-
-                    {/*<div onClick={() => navigate(`${id}`)}*/}
-                    {/*     className={"items-center text-gray-300 font-semibold flex bg-slate-800 py-2 px-3 rounded scale-90 hover:scale-100 transition-all cursor-pointer hover:bg-sky-500 hover:text-white"}>*/}
-                    {/*        <span className={"mr-2"}>*/}
-                    {/*            Attend</span> <span*/}
-                    {/*    className={""}><AiOutlineCaretRight/></span>*/}
-                    {/*</div>*/}
-                    <div className={""}>
-                        <span className={"text-lg font-bold text-sky-300 mr-2"}>80</span>
-                        <span className={"text-sm font-semibold text-gray-500"}>Participants</span>
-                    </div>
-
                 </div>
+
+                <div className={"my-5"}></div>
+                <CardMetrics/>
             </div>
         </motion.div>
     );

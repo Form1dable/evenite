@@ -28,16 +28,33 @@ declare global {
     }
 
     interface EventsStateInterface {
-        data: {
-            allEvents: EventInterface[],
-            upcommingEventsList: EventInterface[],
-            allUpcommingsEvents: EventInterface[],
-            exploreEventsList: EventInterface[]
-        };
-        allEventsStatus: "loading" | "error" | "success" | "idle";
-        upcommingEventsListStatus: "loading" | "error" | "success" | "idle";
-        allUpcommingEventsStatus: "loading" | "error" | "success" | "idle";
-        exploreEventsListStatus: "loading" | "error" | "success" | "idle";
-        error: string;
+        upcomingEvents: {
+            data: EventInterface[],
+            success: boolean;
+            error: boolean;
+            loading: boolean;
+            message: "",
+        },
+        allEvents: {
+            data: EventInterface[],
+            success: boolean;
+            error: boolean;
+            loading: boolean;
+            message: "",
+        },
+        upcomingEventsList: {
+            data: EventInterface[],
+            success: boolean;
+            error: boolean;
+            loading: boolean;
+            message: "",
+        },
+        exploreEventsList: {
+            data: EventInterface[],
+            success: boolean;
+            error: boolean;
+            loading: boolean;
+            message: "",
+        },
     }
 }

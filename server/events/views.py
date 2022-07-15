@@ -71,7 +71,7 @@ def update_event(request, id):
 # Categorized events
 
 @api_view(["GET"])
-def upcomming_events(request):
+def upcoming_events(request):
     limit = request.GET.get("limit", None)
     if limit is not None:
         events = Event.objects.filter(start_date__gte=timezone.now()).order_by("start_date")[:int(limit)]

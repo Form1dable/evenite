@@ -4,17 +4,36 @@ import axios from "../../config/axios"
 
 // Slice and State
 const initialState: EventsStateInterface = {
-    data: {
-        allEvents: [],
-        upcommingEventsList: [],
-        allUpcommingsEvents: [],
-        exploreEventsList: []
+    allEvents: {
+        data: [],
+        error: false,
+        success: false,
+        loading: false,
+        message: ""
     },
-    allEventsStatus: "idle",
-    upcommingEventsListStatus: "idle",
-    allUpcommingEventsStatus: "idle",
-    exploreEventsListStatus: "idle",
-    error: ""
+    upcomingEvents: {
+        data: [],
+        error: false,
+        success: false,
+        loading: false,
+        message: ""
+    },
+    upcomingEventsList: {
+        data: [],
+        error: false,
+        success: false,
+        loading: false,
+        message: ""
+
+    },
+    exploreEventsList: {
+        data: [],
+        error: false,
+        success: false,
+        loading: false,
+        message: ""
+
+    },
 }
 
 const eventsSlice = createSlice({
@@ -22,64 +41,68 @@ const eventsSlice = createSlice({
     initialState,
     reducers: {
         resetAllEvents: (state) => {
-            state.data.allEvents = [];
-            state.allEventsStatus = "idle"
-            state.error = ""
+            // state.data.allEvents = [];
+            // state.allEventsStatus = "idle"
+            // state.error = ""
         }
     },
     extraReducers: (builder) => {
         builder
             // All Events
             .addCase(getAllEvents.pending, (state) => {
-                state.allEventsStatus = "loading";
+                state.allEvents.loading = true;
             })
             .addCase(getAllEvents.fulfilled, (state, action) => {
-                state.allEventsStatus = "success";
-                state.data.allEvents = action.payload
+                state.allEvents.loading = false;
+                state.allEvents.success = true;
+                state.allEvents.data = action.payload
             })
             .addCase(getAllEvents.rejected, (state, action: any) => {
-                state.allEventsStatus = "error";
-                state.error = action.payload;
-                state.data.allEvents = []
+                state.allEvents.error = true;
+                state.allEvents.message = action.payload
+                state.allEvents.success = false
             })
             // Events page 3 all event call
+            .addCase(getAllUpcomingEvents.pending, (state) => {
+                state.upcomingEvents.loading = true;
+            })
+            .addCase(getAllUpcomingEvents.fulfilled, (state, action) => {
+                state.upcomingEvents.loading = false
+                state.upcomingEvents.success = true
+                state.upcomingEvents.data = action.payload;
+            })
+            .addCase(getAllUpcomingEvents.rejected, (state, action: any) => {
+                state.upcomingEvents.loading = false
+                state.upcomingEvents.error = true
+                state.upcomingEvents.message = action.payload
+            })
+            .addCase(getUpcomingEventsList.pending, (state) => {
+                state.upcomingEventsList.loading = true;
+            })
+            .addCase(getUpcomingEventsList.fulfilled, (state, action) => {
+                state.upcomingEventsList.loading = false
+                state.upcomingEventsList.success = true
+                state.upcomingEventsList.data = action.payload;
+            })
+            .addCase(getUpcomingEventsList.rejected, (state, action: any) => {
+                state.upcomingEventsList.loading = false
+                state.upcomingEventsList.error = true
+                state.upcomingEventsList.message = action.payload
+            })
+            // Events page 3 upcomming event call
             .addCase(getExploreEventsList.pending, (state) => {
-                state.exploreEventsListStatus = "loading"
+                state.exploreEventsList.loading = true;
 
             })
             .addCase(getExploreEventsList.fulfilled, (state, action) => {
-                state.exploreEventsListStatus = "success";
-                state.data.exploreEventsList = action.payload;
+                state.exploreEventsList.loading = false;
+                state.exploreEventsList.success = true;
+                state.exploreEventsList.data = action.payload;
             })
             .addCase(getExploreEventsList.rejected, (state, action: any) => {
-                state.exploreEventsListStatus = "error";
-                state.error = action.payload
-            })
-            // Events page 3 upcomming event call
-            .addCase(getUpcommingEvenstList.pending, (state) => {
-                state.upcommingEventsListStatus = "loading"
-
-            })
-            .addCase(getUpcommingEvenstList.fulfilled, (state, action) => {
-                state.upcommingEventsListStatus = "success";
-                state.data.upcommingEventsList = action.payload;
-            })
-            .addCase(getUpcommingEvenstList.rejected, (state, action: any) => {
-                state.upcommingEventsListStatus = "error";
-                state.error = action.payload
-            })
-            // Upcomming page all upcomming events call
-            .addCase(getAllUpcommingEvents.pending, (state) => {
-                state.allUpcommingEventsStatus = "loading"
-
-            })
-            .addCase(getAllUpcommingEvents.fulfilled, (state, action) => {
-                state.allUpcommingEventsStatus = "success";
-                state.data.allUpcommingsEvents = action.payload;
-            })
-            .addCase(getAllUpcommingEvents.rejected, (state, action: any) => {
-                state.allUpcommingEventsStatus = "error";
-                state.error = action.payload
+                state.exploreEventsList.loading = false;
+                state.exploreEventsList.error = true;
+                state.exploreEventsList.message = action.payload;
             })
     }
 })
@@ -96,6 +119,20 @@ export const getAllEvents = createAsyncThunk("events/getAllEvents", async (arg, 
 })
 
 
+export const getAllUpcomingEvents = createAsyncThunk("events/getAllUpcommingEventsList", async (limit: number, thunkAPI) => {
+    try {
+        const response = await axios.get("events/upcomming-events")
+
+        return response.data
+    } catch (error: any) {
+        const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
+
+        return thunkAPI.rejectWithValue(message)
+    }
+
+})
+
+
 export const getExploreEventsList = createAsyncThunk("events/getExploreEventsList", async (limit: number, thunkAPI) => {
     try {
         const response = await axios.get("/events", {params: {limit}})
@@ -108,30 +145,17 @@ export const getExploreEventsList = createAsyncThunk("events/getExploreEventsLis
 });
 
 
-export const getUpcommingEvenstList = createAsyncThunk("events/getUpcommingEventsList", async (limit: number, thunkAPI) => {
+export const getUpcomingEventsList = createAsyncThunk("events/getUpcommingEventsList", async (limit: number, thunkAPI) => {
     try {
-        const response = await axios.get("events/upcomming-events", {params: {limit}})
-
+        const response = await axios.get("events/upcoming-events", {params: {limit}})
         return response.data
     } catch (error: any) {
         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
 
         return thunkAPI.rejectWithValue(message)
     }
-})
+});
 
-export const getAllUpcommingEvents = createAsyncThunk("events/getAllUpcommingEventsList", async (args, thunkAPI) => {
-    try {
-        const response = await axios.get("events/upcomming-events")
-
-        return response.data
-    } catch (error: any) {
-        const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
-
-        return thunkAPI.rejectWithValue(message)
-    }
-
-})
 
 export const {resetAllEvents} = eventsSlice.actions
 export default eventsSlice.reducer

@@ -33,7 +33,7 @@ const Login: React.FC = () => {
                                 type="email"
                                 name="email"
                                 placeholder="Email address"
-                                className={"py-4 px-4 w-96 rounded bg-slate-800 text-slate-100 w-full"}
+                                className={"py-4 px-4 rounded bg-slate-800 text-slate-100 w-full"}
                                 onChange={handleInput}
                                 value={formData.email}
                                 required
@@ -45,7 +45,7 @@ const Login: React.FC = () => {
                                 type="password"
                                 name="password"
                                 placeholder="Email address"
-                                className={"py-4 px-4 w-96 rounded bg-slate-800 text-slate-100 w-full"}
+                                className={"py-4 px-4 rounded bg-slate-800 text-slate-100 w-full"}
                                 onChange={handleInput}
                                 value={formData.password}
                                 required

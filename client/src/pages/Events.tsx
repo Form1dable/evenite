@@ -3,28 +3,33 @@ import {RootState, AppDispatch} from "../app/store"
 
 // Redux
 import {useDispatch, useSelector} from "react-redux";
-import {
-    getExploreEventsList,
-    getUpcommingEvenstList
-} from "../features/events/eventsSlice";
+import {getUpcomingEventsList, getExploreEventsList} from "../features/events/eventsSlice";
 
 import EventSectionHeader from "../components/events/EventSectionHeader";
 import EventCard from "../components/events/EventCard";
 import AnimatedPage from "../components/animation/AnimatedPage";
+import ApiResponseError from "../components/ui/ApiResponseError";
+import Spinner from "../components/ui/Spinner";
 
 
 const Events: React.FC = () => {
 
     const dispatch = useDispatch<AppDispatch>()
-    const upcommingEventsList = useSelector<RootState, EventInterface[]>(state => state.events.data.upcommingEventsList)
-    const exploreEventsList = useSelector<RootState, EventInterface[]>(state => state.events.data.exploreEventsList)
+    const {
+        upcomingEventsList,
+        exploreEventsList
+    } = useSelector<RootState, EventsStateInterface>(state => state.events)
 
 
     useEffect(() => {
-        dispatch(getUpcommingEvenstList(3))
+        dispatch(getUpcomingEventsList(3))
         dispatch(getExploreEventsList(3))
     }, []);
 
+    useEffect(() => {
+        console.log(exploreEventsList, "Explore")
+        console.log(upcomingEventsList, "Upcoming")
+    })
 
     return (
         <AnimatedPage>
@@ -33,28 +38,36 @@ const Events: React.FC = () => {
                     {/* Discover */}
                     <EventSectionHeader title={"Upcomming Events"} subtitle={"Discover"}/>
 
-                    <article>
-                        <article className={"flex space-x-6 mt-6"}>
-                            {/*  Event Cards  */}
-                            {upcommingEventsList.map(event => (
-                                <EventCard key={event.id} event={event}/>
-                            ))}
+                    {upcomingEventsList.error ? <ApiResponseError/> : (
+                        <article>
+                            {upcomingEventsList.loading ? <Spinner/> : (
+                                <article className={"flex space-x-6 mt-6"}>
+                                    {/*/!*  Event Cards  *!/*/}
+                                    {upcomingEventsList.data.map(event => (
+                                        <EventCard key={event.id} event={event}/>
+                                    ))}
+                                </article>
+                            )}
                         </article>
-                    </article>
+                    )}
                 </section>
 
                 <section className={"mt-16"}>
                     {/* Explore */}
                     <EventSectionHeader title={"Events"} subtitle={"Explore"}/>
 
-                    <article>
-                        <article className={"flex space-x-6 mt-6"}>
-                            {/*  Event Cards  */}
-                            {exploreEventsList.map(event => (
-                                <EventCard key={event.id} event={event}/>
-                            ))}
+                    {exploreEventsList.error ? <ApiResponseError/> : (
+                        <article>
+                            {exploreEventsList.loading ? <Spinner/> : (
+                                <article className={"flex space-x-6 mt-6"}>
+                                    {/*  Event Cards  */}
+                                    {exploreEventsList.data.map(event => (
+                                        <EventCard key={event.id} event={event}/>
+                                    ))}
+                                </article>
+                            )}
                         </article>
-                    </article>
+                    )}
                 </section>
 
             </main>
