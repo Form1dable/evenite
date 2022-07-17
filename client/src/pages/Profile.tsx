@@ -1,7 +1,21 @@
-import React from "react"
+import React, {useEffect} from "react"
 import CardMetrics from "../components/ui/CardMetrics";
 
+import {useDispatch} from "react-redux";
+import {AppDispatch, RootState} from "../app/store";
+import {getProfile} from "../features/auth/authSlice";
+
 const Profile: React.FC = () => {
+    const dispatch = useDispatch<AppDispatch>()
+
+
+    useEffect(() => {
+
+        dispatch(getProfile())
+
+    }, []);
+
+
     return (
         <main>
 

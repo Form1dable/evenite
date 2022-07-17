@@ -133,6 +133,7 @@ export const getAllUpcomingEvents = createAsyncThunk("events/getAllUpcommingEven
 })
 
 
+// !TODO: Limit api call
 export const getExploreEventsList = createAsyncThunk("events/getExploreEventsList", async (limit: number, thunkAPI) => {
     try {
         const response = await axios.get("/events", {params: {limit}})

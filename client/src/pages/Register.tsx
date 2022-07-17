@@ -1,9 +1,25 @@
 import React, {useState, useEffect} from "react"
+import {RootState, AppDispatch} from "../app/store";
 
-import {Link} from "react-router-dom"
+// Redux
+import {useDispatch, useSelector} from "react-redux";
+import {registerAccount, registerReset} from "../features/auth/authSlice";
+
+// Libraries
+import {Link, useNavigate} from "react-router-dom"
+
+// Components
 import AnimatedPage from "../components/animation/AnimatedPage";
+import {toast} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const Register: React.FC = () => {
+
+    const dispatch = useDispatch<AppDispatch>()
+    const navigate = useNavigate()
+    const {register} = useSelector<RootState, AuthStateInterface>(state => state.auth)
+    const {loading, error, success, message} = register
 
     const [formData, setFormData] = useState({
         email: "",
@@ -13,15 +29,47 @@ const Register: React.FC = () => {
     })
 
     const handleInput = (e: React.ChangeEvent<HTMLInputElement>): void => {
+
         setFormData({...formData, [e.target.name]: e.target.value})
     }
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
 
-        console.log(formData)
+        const {email, username, password1, password2} = formData
+
+        if (password1 !== password2) {
+            toast.error("The password doesn't match!")
+            setFormData({...formData, password1: "", password2: ""})
+            return
+        }
+
+        const data = {
+            email,
+            username,
+            password: password1
+        }
+
+        dispatch(registerAccount(data))
+
         setFormData({email: "", username: "", password1: "", password2: ""})
     }
+
+
+    useEffect(() => {
+        if (success) {
+            toast.success("Your account has been created.")
+        }
+        dispatch(registerReset())
+    }, [success])
+
+    useEffect(() => {
+        if (error) {
+            toast.error("Something went wrong")
+        }
+
+    }, [error])
+
 
     return (
         <AnimatedPage>

@@ -57,4 +57,28 @@ declare global {
             message: "",
         },
     }
+
+    interface AuthStateInterface {
+        user: {
+            id: number | null;
+            username: string;
+            email: string;
+        }
+        token: {
+            access: string;
+            refresh: string;
+            loading: boolean;
+            success: boolean;
+            authenticated: boolean;
+            error: boolean;
+            message: string;
+        }
+        register: {
+            loading: boolean;
+            success: boolean;
+            error: boolean;
+            message: string;
+        }
+
+    }
 }

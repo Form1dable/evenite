@@ -26,10 +26,6 @@ const Events: React.FC = () => {
         dispatch(getExploreEventsList(3))
     }, []);
 
-    useEffect(() => {
-        console.log(exploreEventsList, "Explore")
-        console.log(upcomingEventsList, "Upcoming")
-    })
 
     return (
         <AnimatedPage>

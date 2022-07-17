@@ -58,7 +58,7 @@ const EventCard: React.FC<Props> = (props) => {
 
                 {/* Content */}
                 <p className={"mt-4 text-2xl font-bold tracking-wide text-slate-200"}>BBQ Party - {title}</p>
-                <p className={"text-sm mt-1 text-gray-400 text-justify"}>
+                <p className={"text-sm mt-2 text-gray-500 text-justify"}>
                     Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
                     industry's standard dummy text ever since the 1500s
                 </p>

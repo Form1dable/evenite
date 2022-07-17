@@ -1,10 +1,23 @@
 import React, {useState, useEffect, SyntheticEvent} from "react"
 
+// Redux
+import {getToken, setToken, resetToken} from "../features/auth/authSlice";
+import {AppDispatch, RootState} from "../app/store";
+import {useDispatch, useSelector} from "react-redux";
+
+
+// Libraries
 import {Link} from "react-router-dom"
+
+
+// Components
 import AnimatedPage from "../components/animation/AnimatedPage";
 
 
 const Login: React.FC = () => {
+
+    const dispatch = useDispatch<AppDispatch>()
+    const token = useSelector<RootState>(state => state.auth.token)
 
     const [formData, setFormData] = useState({
         email: "",
@@ -18,7 +31,8 @@ const Login: React.FC = () => {
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
 
-        console.log(formData)
+        dispatch(getToken(formData))
+
         setFormData({email: "", password: ""})
     }
 
