@@ -2,7 +2,6 @@
 
 ## Description
 
----
 
 Evenite is a web event management application for the students of FH Südwestfalen students. This application will provide features like, creating events and inviting participants who belong to a certain campus or program. It will also have a built-in survey form, user generated polls and a comment section to form a discussion. The data provided by the survey and poll will be visualized using different charts.
 
@@ -10,7 +9,7 @@ The other feature that this event management application will be providing is th
 
 ## Objective
 
----
+
 
 The objective of building this project was to learn the fundamentals of web application development and to get a deeper understanding of both front and backend.
 
@@ -41,7 +40,7 @@ My goal was to learn by creating a project that is functional and somewhat resem
 
 ## Technologies Used
 
----
+
 
 **Frontend**
 
@@ -72,11 +71,10 @@ My goal was to learn by creating a project that is functional and somewhat resem
 
 ## Requirements & Features
 
----
 
 ### 1. User
 
----
+
 
 **Account Creation and Authentication**
 
@@ -104,7 +102,7 @@ My goal was to learn by creating a project that is functional and somewhat resem
 
 ### 2. Creator
 
----
+
 
 **Events Creation and Invitation**
 
@@ -148,7 +146,7 @@ My goal was to learn by creating a project that is functional and somewhat resem
 
 ## Database Design
 
----
+
 
 **User and Authentication**
 
@@ -176,11 +174,11 @@ Survey and Polls
 
 ## Solution approach
 
----
+
 
 ### **Authentication**
 
----
+
 
 **Requirements**
 
@@ -195,7 +193,7 @@ This token will then be saved to the localstorage and attached to an `axios` ins
 
 ### API Call
 
----
+
 
 **Requirements**
 
