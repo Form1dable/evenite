@@ -1,9 +1,8 @@
 import React from 'react';
-import {Routes, Route, useLocation} from "react-router-dom"
 
 
 // Libraries
-import {ToastContainer} from "react-toastify";
+import {Routes, Route, useLocation} from "react-router-dom"
 
 // Pages
 import Home from "./pages/Home"
@@ -18,10 +17,12 @@ import Events from "./pages/Events"
 import Navbar from "./components/navigation/Navbar"
 import Footer from "./components/footer/Footer"
 import {AnimatePresence} from "framer-motion";
+import {ToastContainer} from "react-toastify";
 
 // Routes
 import ProtectedRoute from "./routes/ProtectedRoute";
 import PublicRoute from "./routes/PublicRoute";
+import CreateEvent from "./pages/CreateEvent";
 
 
 function App() {
@@ -60,6 +61,12 @@ function App() {
                                 </ProtectedRoute>
                             }/>
                             <Route path="/events" element={<Events/>}/>
+                            <Route path="/events/create-event" element={
+                                <ProtectedRoute>
+                                    <CreateEvent/>
+                                </ProtectedRoute>
+                            }
+                            />
                             <Route path="/events/:eventId" element={<Event/>}/>
                         </Routes>
                     </AnimatePresence>

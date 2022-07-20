@@ -10,17 +10,9 @@ from rest_framework.permissions import IsAuthenticated
 from events.models import Event
 from events.serializers import EventSerializer
 
-# Create your views here.
 
-@api_view(["GET"])
-def get_event(request, id):
-    event = Event.objects.get(pk=id)
 
-    if event is not None:
-        serializer = EventSerializer(event)
-        return Response(serializer.data)
-    return Response(status=status.HTTP_404_NOT_FOUND)
-
+# PUBLIC ROUTES
 
 @api_view(["GET"])
 def get_all_events(request):
@@ -39,36 +31,16 @@ def get_all_events(request):
     return Response(status=status.HTTP_404_NOT_FOUND)
 
 
-
-@api_view(["DELETE"])
-def delete_event(request, id):
-    return Response({})
-
-@api_view(["POST"])
-def create_event(request):
-    serializer = EventSerializer(data=request.data)
-    if serializer.is_valid():
-        serializer.save()
-        return Response(status=status.HTTP_201_CREATED)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-@api_view(["PUT"])
-def update_event(request, id):
+@api_view(["GET"])
+def get_event(request, id):
     event = Event.objects.get(pk=id)
 
     if event is not None:
-        serializer = EventSerializer(event, data=request.data, partial=True)
-
-        if serializer.is_valid():
-            serializer.save()
-            return Response(status=status.HTTP_200_OK)
-
-    return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
+        serializer = EventSerializer(event)
+        return Response(serializer.data)
+    return Response(status=status.HTTP_404_NOT_FOUND)
 
 
-
-# Categorized events
 
 @api_view(["GET"])
 def upcoming_events(request):
@@ -86,3 +58,38 @@ def upcoming_events(request):
         return Response(serializer.data)
 
     return Response(status=status.HTTP_404_NOT_FOUND)
+
+
+# PRIVATE ROUTES
+
+@api_view(["POST"])
+@permission_classes([IsAuthenticated])
+def create_event(request):
+    serializer = EventSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+@api_view(["PUT"])
+@permission_classes([IsAuthenticated])
+def update_event(request, id):
+    event = Event.objects.get(pk=id)
+
+    if event is not None:
+        serializer = EventSerializer(event, data=request.data, partial=True)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(status=status.HTTP_200_OK)
+
+    return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
+
+
+
+@api_view(["DELETE"])
+@permission_classes([IsAuthenticated])
+def delete_event(request, id):
+    return Response({})

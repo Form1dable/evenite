@@ -58,3 +58,4 @@ class Profile(models.Model):
     user_id = models.OneToOneField(User, on_delete=models.CASCADE)
     campus = models.CharField(max_length=2, choices=CampusLocation.choices)
     program = models.CharField(max_length=2, choices=Program.choices)
+    phone = models.CharField(_("phone"), max_length=12, blank=True, null=True)

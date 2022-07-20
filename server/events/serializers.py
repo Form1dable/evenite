@@ -22,6 +22,8 @@ class EventSerializer(serializers.ModelSerializer):
             instance.city = validated_data.get("city", instance.city)
             instance.street = validated_data.get("street", instance.street)
             instance.postal = validated_data.get("postal", instance.postal)
+            instance.participants = validated_data.get("participants", instance.participants)
+            instance.following = validated_data.get("following", instance.following)
 
             instance.save()
 

@@ -9,10 +9,13 @@ class CustomUserManager(BaseUserManager):
         if not email:
             raise ValueError(_("You must provide an email"))
 
-        email = self.normalize_email(email)
-        user = self.model(email=email, username=username, **other_fields)
+        user = self.model(
+            email=self.normalize_email(email),
+        )
+
+
         user.set_password(password)
-        user.save()
+        user.save(using=self._db)
         return user
 
     # Superuser pre-requisite

@@ -11,7 +11,7 @@ const Profile: React.FC = () => {
 
     useEffect(() => {
 
-        dispatch(getProfile())
+        // dispatch(getProfile())
 
     }, []);
 

@@ -1,15 +1,28 @@
 import {createSlice, createAsyncThunk, PayloadAction} from "@reduxjs/toolkit"
-import axios from "../../config/axios"
+import axios from "axios"
 
 const initialState: EventStateInterface = {
-    data: {
-        event: {},
+    event: {
+        data: {} as EventInterface,
+        loading: false,
+        error: false,
+        success: false,
+        message: ""
     },
-    loading: false,
-    error: false,
-    success: false,
-    message: ""
-
+    createEvent: {
+        loading: false,
+        error: false,
+        success: false,
+        message: ""
+    },
+    updateEvent: {
+        loading: false,
+        error: false,
+        success: false,
+        message: ""
+    },
+    formBuilder: "",
+    active: false
 }
 
 const eventSlice = createSlice({
@@ -17,27 +30,27 @@ const eventSlice = createSlice({
     initialState,
     reducers: {
         reset: (state) => {
-            state.data.event = {};
-            state.loading = false;
-            state.success = false;
-            state.error = false
-            state.message = ""
+            state.event.data = {} as EventInterface;
+            state.event.loading = false;
+            state.event.success = false;
+            state.event.error = false
+            state.event.message = ""
         }
     },
     extraReducers: builder => {
         builder
             .addCase(getEvent.pending, (state) => {
-                state.loading = true;
+                state.event.loading = true;
             })
             .addCase(getEvent.fulfilled, (state, action) => {
-                state.loading = false;
-                state.data.event = action.payload
+                state.event.loading = false;
+                state.event.data = action.payload
             })
             .addCase(getEvent.rejected, (state, action: any) => {
-                state.loading = false;
-                state.success = false;
-                state.error = true;
-                state.message = action.payload
+                state.event.loading = false;
+                state.event.success = false;
+                state.event.error = true;
+                state.event.message = action.payload
             })
     }
 
@@ -54,6 +67,7 @@ export const getEvent = createAsyncThunk("event/getEvent", async (eventId: numbe
     }
 
 })
+
 
 export const eventAction = eventSlice.actions
 export default eventSlice.reducer

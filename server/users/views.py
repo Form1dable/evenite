@@ -12,9 +12,7 @@ from users.serializers import UserSerializer
 
 
 @api_view(["GET"])
-@permission_classes([IsAuthenticated])
 def users(request):
-    print(request.user)
     users = User.objects.all()
     serializer = UserSerializer(users, many=True)
     return Response(serializer.data)

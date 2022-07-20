@@ -8,6 +8,7 @@ import {useDispatch, useSelector} from "react-redux";
 
 // Libraries
 import {Link} from "react-router-dom"
+import {toast} from "react-toastify";
 
 
 // Components
@@ -17,7 +18,8 @@ import AnimatedPage from "../components/animation/AnimatedPage";
 const Login: React.FC = () => {
 
     const dispatch = useDispatch<AppDispatch>()
-    const token = useSelector<RootState>(state => state.auth.token)
+    const authenticated = useSelector<RootState>(state => state.auth.token.authenticated)
+
 
     const [formData, setFormData] = useState({
         email: "",
@@ -35,6 +37,7 @@ const Login: React.FC = () => {
 
         setFormData({email: "", password: ""})
     }
+
 
     return (
         <AnimatedPage>

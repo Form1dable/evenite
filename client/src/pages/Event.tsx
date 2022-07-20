@@ -19,17 +19,11 @@ const Event: React.FC = () => {
     const navigate = useNavigate()
     const {eventId} = useParams()
 
-    const {loading, success, error, data, message} = useSelector<RootState, EventStateInterface>(state => state.event)
-
-    const {id, user_id, title, description, price, start_date, end_date} = data.event
-
     useEffect(() => {
         dispatch(getEvent(Number(eventId)))
 
     }, [])
 
-    useEffect(() => {
-    })
 
     return (
         <main className={""}>

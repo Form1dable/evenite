@@ -9,6 +9,85 @@ import axios from "../../config/axios"
 const token = JSON.parse(localStorage.getItem("token"))
 
 
+// Actions
+
+interface RegisterFormDataInterface {
+    email: string;
+    username: string;
+    password: string;
+}
+
+interface LoginFormDataInterface {
+    email: string;
+    password: string;
+}
+
+
+// Authentication
+export const registerAccount = createAsyncThunk("auth/register", async (payload: RegisterFormDataInterface, thunkAPI) => {
+    try {
+        const response = await axios.post("/users/register", payload)
+
+        console.log(response.status)
+        return response.data
+    } catch (error: any) {
+        const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
+
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+
+// Only for login
+export const getToken = createAsyncThunk("auth/getToken", async (formData: LoginFormDataInterface, thunkAPI) => {
+    try {
+        const response = await axios.post("/api/token", formData)
+        console.log("Try", response)
+
+        if (response.data) {
+            localStorage.setItem("token", response.data)
+        }
+
+
+        return response.data
+    } catch (error: any) {
+        console.log("Catch", error)
+        const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+
+
+// For logout
+export const logout = createAsyncThunk("auth/logout", (arg, thunkAPI) => {
+    localStorage.removeItem("token")
+    return thunkAPI.dispatch(resetToken())
+})
+
+
+// Private
+
+
+// Public
+
+export const getProfile = createAsyncThunk("auth/getProfile", async (arg, thunkAPI) => {
+    const token = JSON.parse(localStorage.getItem("token"))
+    const config = {
+        headers: {
+            "Authorization": `Bearer ${token.access}`
+        }
+    }
+    try {
+        const response = await axios.get("users/user", config)
+
+        return response.data
+    } catch (error: any) {
+        const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
+
+        return thunkAPI.rejectWithValue(message)
+    }
+
+})
+
 const initialState: AuthStateInterface = {
     user: {
         id: null,
@@ -37,6 +116,7 @@ if (token) {
     initialState.token.access = token.access
     initialState.token.refresh = token.refresh
     initialState.token.authenticated = true
+    console.log("Token found");
 }
 
 // Reducer
@@ -45,8 +125,9 @@ const authSlice = createSlice({
     initialState,
     reducers: {
         setToken: (state, action) => {
-            state.token.access = action.payload.access
-            state.token.refresh = action.payload.refresh
+            state.token.access = action.payload.access;
+            state.token.refresh = action.payload.refresh;
+            state.token.authenticated = true;
         },
         resetToken: (state) => {
             state.token.access = null
@@ -82,7 +163,8 @@ const authSlice = createSlice({
             .addCase(getToken.pending, (state) => {
                 state.token.loading = true
             })
-            .addCase(getToken.fulfilled, (state, action) => {
+            .addCase(getToken.fulfilled, (state, action: any) => {
+                console.log("Fulfilled Action", action)
                 state.token.loading = false;
                 state.token.success = true;
                 state.token.access = action.payload.access
@@ -90,95 +172,14 @@ const authSlice = createSlice({
                 state.token.authenticated = true;
             })
             .addCase(getToken.rejected, (state, action: any) => {
+                console.log("Rejected Action", action)
                 state.token.loading = false;
                 state.token.error = true;
                 state.token.message = action.payload
             })
-        // .addCase(getProfile.pending, (state) => {
-        //
-        // })
-        // .addCase(getProfile.fulfilled, (state, action) => {
-        //     state.user.id = action.payload.id
-        //     state.user.username = action.payload.username
-        //     state.user.email = action.payload.email
-        // })
-        // .addCase(getProfile.rejected, (state) => {
-        //
-        // })
     }
 })
 
-
-// Actions
-
-interface RegisterAccountPayloadInterface {
-    email: string;
-    username: string;
-    password: string;
-}
-
-
-// Authentication
-export const registerAccount = createAsyncThunk("auth/register", async (payload: RegisterAccountPayloadInterface, thunkAPI) => {
-    try {
-        const response = await axios.post("users/register", payload)
-        return response.data
-    } catch (error: any) {
-        const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
-
-        thunkAPI.rejectWithValue(message)
-    }
-})
-
-// Only for login
-export const getToken = createAsyncThunk("auth/getToken", async (payload: { email: string, password: string }, thunkAPI) => {
-    try {
-        const response = await axios.post("api/token", payload)
-        const data = await response.data
-
-        console.log(data)
-
-        localStorage.setItem("token", JSON.stringify(data))
-
-        return response.data
-    } catch (error: any) {
-        const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
-
-        thunkAPI.rejectWithValue(message)
-    }
-})
-
-
-// For logout
-export const logout = createAsyncThunk("auth/logout", (arg, thunkAPI) => {
-    localStorage.removeItem("token")
-    thunkAPI.dispatch(resetToken())
-})
-
-
-// Private
-
-
-// Public
-
-export const getProfile = createAsyncThunk("auth/getProfile", async (arg, thunkAPI) => {
-    const token = JSON.parse(localStorage.getItem("token"))
-    const config = {
-        headers: {
-            "Authorization": `Bearer ${token.access}`
-        }
-    }
-    try {
-        const response = await axios.get("users/user", config)
-
-        return response.data
-    } catch (error: any) {
-        const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
-
-        thunkAPI.rejectWithValue(message)
-    }
-
-})
 
 export const {registerReset, setToken, resetToken} = authSlice.actions
 export default authSlice.reducer

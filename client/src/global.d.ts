@@ -18,13 +18,34 @@ declare global {
     }
 
     interface EventStateInterface {
-        data: {
-            event?: EventInerface;
-        };
-        loading: boolean;
-        success: boolean;
-        error: boolean;
-        message: string;
+        // data: {
+        //     event?: EventInerface;
+        // };
+        // loading: boolean;
+        // success: boolean;
+        // error: boolean;
+        // message: string;
+        event: {
+            data?: EventInterface,
+            loading: boolean;
+            error: boolean;
+            success: boolean;
+            message: string;
+        },
+        createEvent: {
+            loading: boolean;
+            error: boolean;
+            success: boolean;
+            message: string;
+        },
+        updateEvent: {
+            loading: boolean;
+            error: boolean;
+            success: boolean;
+            message: string;
+        },
+        formBuilder: "create" | "update" | "";
+        active: boolean;
     }
 
     interface EventsStateInterface {
