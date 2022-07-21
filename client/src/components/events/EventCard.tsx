@@ -25,7 +25,6 @@ const EventCard: React.FC<Props> = (props) => {
         title,
         description,
         image,
-        price,
         start_date,
         end_date,
         state,
@@ -42,10 +41,10 @@ const EventCard: React.FC<Props> = (props) => {
                 scale: 1.02,
                 transition: {duration: 0.3}
             }}
-            className={"w-full max-w-lg bg-gray-800 rounded shadow-md cursor-pointer"}
+            className={"w-full max-w-lg bg-zinc-800 rounded shadow-md cursor-pointer"}
             style={{minWidth: "350px"}}>
             {/* Image */}
-            <div className={"w-full bg-slate-600 h-48 cursor-pointer"}>
+            <div className={"w-full bg-zinc-600 h-48 cursor-pointer"}>
             </div>
 
             {/* Card content */}

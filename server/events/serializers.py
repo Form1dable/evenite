@@ -7,7 +7,7 @@ from django.utils.text import slugify
 class EventSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event
-        fields = ["id", "user_id", "title", "description", "price", "start_date", "end_date", "state", "city", "street", "postal"]
+        fields = ["id", "user_id", "organizer", "title", "description", "type", "category",  "start_date", "end_date", "state", "city", "street", "postal"]
 
         def create(self, validated_data):
             return Event(**validated_data)

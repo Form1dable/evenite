@@ -10,6 +10,9 @@ from rest_framework.permissions import IsAuthenticated
 from events.models import Event
 from events.serializers import EventSerializer
 
+from users.models import User
+from users.serializers import UserSerializer
+
 
 
 # PUBLIC ROUTES
@@ -65,6 +68,8 @@ def upcoming_events(request):
 @api_view(["POST"])
 @permission_classes([IsAuthenticated])
 def create_event(request):
+    user = User.objects.get(username=request.user)
+    request.data["user_id"] = user.id
     serializer = EventSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()

@@ -1,5 +1,5 @@
-import {createSlice, createAsyncThunk, PayloadAction} from "@reduxjs/toolkit"
-import axios from "axios"
+import {createSlice, createAsyncThunk} from "@reduxjs/toolkit"
+import axios from "../../config/axios"
 
 const initialState: EventStateInterface = {
     event: {
@@ -52,6 +52,21 @@ const eventSlice = createSlice({
                 state.event.error = true;
                 state.event.message = action.payload
             })
+            .addCase(createEvent.pending, (state) => {
+                state.createEvent.loading = true
+
+            })
+            .addCase(createEvent.fulfilled, (state) => {
+                state.createEvent.loading = false
+                state.createEvent.success = true
+
+            })
+            .addCase(createEvent.rejected, (state, action: any) => {
+                state.createEvent.loading = false
+                state.createEvent.error = true
+                state.createEvent.message = action.payload
+
+            })
     }
 
 })
@@ -64,6 +79,28 @@ export const getEvent = createAsyncThunk("event/getEvent", async (eventId: numbe
     } catch (error: any) {
         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
         return thunkAPI.rejectWithValue(message)
+    }
+
+})
+
+
+export const createEvent = createAsyncThunk("event/createEvent", async (formData: EventInterface, thunkAPI) => {
+    const token = JSON.parse(localStorage.getItem("token"))
+
+    const config = {
+        headers: {
+            "Authorization": `Bearer ${token.access}`
+        }
+    }
+
+    try {
+        const response = await axios.post("/events/create-event", formData, config)
+        return response.data
+
+    } catch (error: any) {
+        const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
+        return thunkAPI.rejectWithValue(message)
+
     }
 
 })

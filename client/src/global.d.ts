@@ -2,29 +2,24 @@ export {};
 
 declare global {
     interface EventInterface {
-        id: number;
-        user_id: string;
+        id?: number;
+        user_id?: string;
         title: string;
         description: string;
-        image: string;
-        price: number;
+        organizer: string;
+        image?: string;
+        type: string;
+        category: string;
         start_date: string;
         end_date: string;
         state: string;
         city: string;
         street: string;
         postal: string;
-        slug: string;
+        slug?: string;
     }
 
     interface EventStateInterface {
-        // data: {
-        //     event?: EventInerface;
-        // };
-        // loading: boolean;
-        // success: boolean;
-        // error: boolean;
-        // message: string;
         event: {
             data?: EventInterface,
             loading: boolean;

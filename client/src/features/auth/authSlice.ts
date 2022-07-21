@@ -28,7 +28,6 @@ export const registerAccount = createAsyncThunk("auth/register", async (payload:
     try {
         const response = await axios.post("/users/register", payload)
 
-        console.log(response.status)
         return response.data
     } catch (error: any) {
         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
@@ -41,16 +40,13 @@ export const registerAccount = createAsyncThunk("auth/register", async (payload:
 export const getToken = createAsyncThunk("auth/getToken", async (formData: LoginFormDataInterface, thunkAPI) => {
     try {
         const response = await axios.post("/api/token", formData)
-        console.log("Try", response)
 
         if (response.data) {
-            localStorage.setItem("token", response.data)
+            localStorage.setItem("token", JSON.stringify(response.data))
         }
-
 
         return response.data
     } catch (error: any) {
-        console.log("Catch", error)
         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
         return thunkAPI.rejectWithValue(message)
     }
@@ -116,7 +112,6 @@ if (token) {
     initialState.token.access = token.access
     initialState.token.refresh = token.refresh
     initialState.token.authenticated = true
-    console.log("Token found");
 }
 
 // Reducer

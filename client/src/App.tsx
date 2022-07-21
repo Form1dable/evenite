@@ -29,7 +29,7 @@ function App() {
     const location = useLocation();
 
     return (
-        <div className="bg-gray-900 min-h-screen text-gray-100 flex flex-col justify-between">
+        <div className="bg-zinc-900 min-h-screen text-gray-100 flex flex-col justify-between">
             <main className={"w-10/12 max-w-7xl mx-auto"}>
                 <Navbar/>
                 <ToastContainer

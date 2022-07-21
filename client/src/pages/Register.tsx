@@ -82,7 +82,7 @@ const Register: React.FC = () => {
                                 type="email"
                                 name="email"
                                 placeholder="Email address"
-                                className={"py-4 px-4 rounded bg-slate-800 text-slate-100 w-full"}
+                                className={"py-4 px-4 rounded bg-zinc-800 text-zinc-100 w-full"}
                                 onChange={handleInput}
                                 value={formData.email}
                                 required
@@ -94,7 +94,7 @@ const Register: React.FC = () => {
                                 type="username"
                                 name="username"
                                 placeholder="Username"
-                                className={"py-4 px-4 rounded bg-slate-800 text-slate-100 w-full"}
+                                className={"py-4 px-4 rounded bg-zinc-800 text-zinc-100 w-full"}
                                 onChange={handleInput}
                                 value={formData.username}
                                 required
@@ -106,7 +106,7 @@ const Register: React.FC = () => {
                                 type="password"
                                 name="password1"
                                 placeholder="Password"
-                                className={"py-4 px-4 rounded bg-slate-800 text-slate-100 w-full"}
+                                className={"py-4 px-4 rounded bg-zinc-800 text-zinc-100 w-full"}
                                 onChange={handleInput}
                                 value={formData.password1}
                                 required
@@ -118,7 +118,7 @@ const Register: React.FC = () => {
                                 type="password"
                                 name="password2"
                                 placeholder="Confirm password"
-                                className={"py-4 px-4 rounded bg-slate-800 text-slate-100 w-full"}
+                                className={"py-4 px-4 rounded bg-zinc-800 text-zinc-100 w-full"}
                                 onChange={handleInput}
                                 value={formData.password2}
                                 required
@@ -128,7 +128,7 @@ const Register: React.FC = () => {
                         <input type={"submit"} value={"Register"}
                                className={"bg-sky-500 py-3 px-8 rounded font-semibold w-full cursor-pointer"}/>
                         <div className={"my-5 flex justify-between items-center"}>
-                            <p style={{fontSize: "0.8rem"}} className={"text-slate-400"}>Already have an account? <span
+                            <p style={{fontSize: "0.8rem"}} className={"text-zinc-400"}>Already have an account? <span
                                 className={"text-sky-300 font-semibold"}><Link to={"/login"}>Login</Link></span></p>
                         </div>
                     </form>

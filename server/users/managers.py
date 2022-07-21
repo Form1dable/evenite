@@ -9,27 +9,24 @@ class CustomUserManager(BaseUserManager):
         if not email:
             raise ValueError(_("You must provide an email"))
 
-        user = self.model(
-            email=self.normalize_email(email),
-        )
+        email = self.normalize_email(email)
+        user = self.model(email=email, username=username, **other_fields)
 
 
         user.set_password(password)
-        user.save(using=self._db)
+        user.save()
         return user
 
-    # Superuser pre-requisite
     def create_superuser(self, email, username, first_name, last_name, password, **other_fields):
+        """
+        Create and save a SuperUser with the given email and password.
+        """
+        other_fields.setdefault('is_staff', True)
+        other_fields.setdefault('is_superuser', True)
+        other_fields.setdefault('is_active', True)
 
-        # For the new User model fields that need to be specifically set in order to get elevated access
-        other_fields.setdefault("is_superuser", True)
-        other_fields.setdefault("is_staff", True)
-        other_fields.setdefault("is_active", True)
-
-        # Validation for superuser
-        if other_fields.get("is_staff") is not True:
-            raise ValueError(_("Superuser must be assigned to is_staff=True"))
-        if other_fields.get("is_superuser") is not True:
-            raise ValueError(_("Superuser must be assigned to is_superuser=True"))
-        
+        if other_fields.get('is_staff') is not True:
+            raise ValueError(_('Superuser must have is_staff=True.'))
+        if other_fields.get('is_superuser') is not True:
+            raise ValueError(_('Superuser must have is_superuser=True.'))
         return self.create_user(email, username, password, **other_fields)

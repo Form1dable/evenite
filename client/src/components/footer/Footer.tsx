@@ -1,6 +1,6 @@
 const Footer: React.FC = () => {
     return (
-        <footer className="mb-8 mt-16 bg-gray-900 w-10/12 max-w-7xl mx-auto">
+        <footer className="mb-8 mt-16 w-10/12 max-w-7xl mx-auto">
             <div className={"flex justify-between items-center"}>
                 <h1 className={"text-sky-300 font-bold text-3xl"}>Evenite</h1>
                 <ul className={"flex space-x-5 font-semibold text-slate-500"}>
